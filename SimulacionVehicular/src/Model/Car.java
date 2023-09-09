@@ -4,6 +4,8 @@
  */
 package Model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Aldokler
@@ -16,6 +18,7 @@ public class Car {
     boolean estado;
     int x, y;
     Object imagen;
+    ArrayList ruta;
 
     public Car(String Identifier, Nodo destino, int x, int y) {
         this.Identifier = Identifier;
@@ -69,5 +72,14 @@ public class Car {
     public void setY(int y) {
         this.y = y;
     }
+
+    public ArrayList getRuta() {
+        return ruta;
+    }
+
+    public void setRuta(ArrayList ruta) {
+        this.ruta = ruta;
+    }
+    
     
 }
