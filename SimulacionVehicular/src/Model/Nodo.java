@@ -49,9 +49,11 @@ public class Nodo {
     }
 
     public Nodo() {
+        this.aristas = new ArrayList();
     }
 
     public Nodo(float tasaCreacion, boolean ocupado) {
+        this.aristas = new ArrayList();
         this.tasaCreacion = tasaCreacion;
         this.ocupado = ocupado;
     }
