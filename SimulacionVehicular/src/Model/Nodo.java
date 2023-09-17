@@ -20,12 +20,37 @@ public class Nodo {
     
     String identifier;
     float tasaCreacion;
-    ArrayList aristas;
+    ArrayList<Arista> aristas;
     boolean ocupado;
     int x, y;
+    boolean visitado;
+
+    public boolean isVisitado() {
+        return visitado;
+    }
+    
 
     public String getIdentifier() {
         return identifier;
+    }
+    public Arista getShortest(ArrayList<Arista> ar){
+    Arista cerca = null;
+    int nearest = Integer.MAX_VALUE;
+    for(int i=0;i<aristas.size();i++){
+        Arista a = aristas.get(i);
+        if(!ar.contains(a)){
+            if(a.getDistancia()<= nearest){
+                nearest = a.getDistancia();
+                System.out.println(nearest);
+                cerca = a;
+            }
+        }
+    }
+    return cerca;
+    }
+
+    public void setVisitado(boolean visitado) {
+        this.visitado = visitado;
     }
 
     public void setIdentifier(String identifier) {
@@ -57,6 +82,12 @@ public class Nodo {
         this.tasaCreacion = tasaCreacion;
         this.ocupado = ocupado;
     }
+
+    public Nodo(String identifier) {
+        this.identifier = identifier;
+        this.aristas = new ArrayList();
+    }
+    
 
     public int getX() {
         return x;

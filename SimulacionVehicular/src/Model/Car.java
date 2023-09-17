@@ -14,14 +14,18 @@ public class Car {
     
     String Identifier;
     int Velocidad;
+    Nodo inicio;
+    Nodo actual;
     Nodo destino;
     boolean estado;
     int x, y;
     Object imagen;
     ArrayList ruta;
 
-    public Car(String Identifier, Nodo destino, int x, int y) {
+    public Car(String Identifier, Nodo inicio, Nodo destino, int x, int y) {
         this.Identifier = Identifier;
+        this.inicio = inicio;
+        this.actual = inicio;
         this.destino = destino;
         this.x = x;
         this.y = y;
@@ -29,6 +33,22 @@ public class Car {
         this.estado = true;
     }
 
+    public Nodo getInicio() {
+        return inicio;
+    }
+
+    public void setInicio(Nodo inicio) {
+        this.inicio = inicio;
+    }
+
+    public Nodo getActual() {
+        return actual;
+    }
+
+    public void setActual(Nodo actual) {
+        this.actual = actual;
+    }
+    
     public String getIdentifier() {
         return Identifier;
     }

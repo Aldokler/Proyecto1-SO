@@ -42,6 +42,11 @@ public class Arista {
     public void setDistancia(int distancia) {
         this.distancia = distancia;
     }
+
+    @Override
+    public String toString() {
+        return "Arista{" + "inicio=" + inicio.getIdentifier() + ", fin=" + fin.getIdentifier() + ", distancia=" + distancia + '}';
+    }
     
     
 }
