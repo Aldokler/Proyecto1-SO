@@ -29,8 +29,9 @@ public class grafo {
            else{
            actual = ab.getFin();
            }
-           
-           rutaDisjktra.add(actual);
+           if(!rutaDisjktra.contains(actual)){
+            rutaDisjktra.add(actual);
+           }
        }
        else{
        Arista ar = actual.getShortest(arcosRecorridos);
@@ -41,7 +42,9 @@ public class grafo {
            actual = ar.getInicio();
        }
        else{
-           rutaDisjktra.add(actual);
+           if(!rutaDisjktra.contains(actual)){
+            rutaDisjktra.add(actual);
+           }
            arcosRecorridos.add(ar);
            if(ar.getFin()==actual){
                actual = ar.getInicio();

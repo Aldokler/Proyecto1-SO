@@ -41,7 +41,6 @@ public class Nodo {
         if(!ar.contains(a)){
             if(a.getDistancia()<= nearest){
                 nearest = a.getDistancia();
-                System.out.println(nearest);
                 cerca = a;
             }
         }
