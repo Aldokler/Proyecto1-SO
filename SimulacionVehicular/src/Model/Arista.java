@@ -4,19 +4,26 @@
  */
 package Model;
 
+import processing.core.PApplet;
+
 /**
  *
  * @author Aldokler
  */
-public class Arista {
+public class Arista extends PApplet{
     
-    Nodo inicio, fin;
-    int distancia;
+    private Nodo inicio, fin;
+    private float distancia;
 
-    public Arista(Nodo inicio, Nodo fin, int distancia) {
+    public Arista(Nodo inicio, Nodo fin, float distancia) {
         this.inicio = inicio;
         this.fin = fin;
         this.distancia = distancia;
+    }
+    
+    public  void display(PApplet p){
+        p.strokeWeight(9); 
+        p.line(inicio.getX(), inicio.getY(), fin.getX(), fin.getY());
     }
 
     public Nodo getInicio() {
@@ -27,7 +34,7 @@ public class Arista {
         return fin;
     }
 
-    public int getDistancia() {
+    public float getDistancia() {
         return distancia;
     }
 
@@ -39,7 +46,7 @@ public class Arista {
         this.fin = fin;
     }
 
-    public void setDistancia(int distancia) {
+    public void setDistancia(float distancia) {
         this.distancia = distancia;
     }
 

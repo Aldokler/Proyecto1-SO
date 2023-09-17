@@ -6,6 +6,7 @@ package Model;
 
 import java.util.ArrayList;
 import Model.Arista;
+import processing.core.PApplet;
 
 /**
  *  Clase de nodo, 
@@ -16,31 +17,30 @@ import Model.Arista;
  * 
  * @author jeffr
  */
-public class Nodo {
+public class Nodo extends PApplet{
     
-    String identifier;
-    float tasaCreacion;
-    ArrayList<Arista> aristas;
-    boolean ocupado;
-    int x, y;
-    boolean visitado;
+    private int identifier;
+    private float tasaCreacion;
+    private ArrayList aristas;
+    private boolean ocupado;
+    private float x, y;
 
     public boolean isVisitado() {
-        return visitado;
+        return ocupado;
     }
     
 
-    public String getIdentifier() {
+    public int getIdentifier() {
         return identifier;
     }
     public Arista getShortest(ArrayList<Arista> ar){
     Arista cerca = null;
     int nearest = Integer.MAX_VALUE;
     for(int i=0;i<aristas.size();i++){
-        Arista a = aristas.get(i);
+        Arista a = (Arista) aristas.get(i);
         if(!ar.contains(a)){
             if(a.getDistancia()<= nearest){
-                nearest = a.getDistancia();
+                nearest = (int) a.getDistancia();
                 cerca = a;
             }
         }
@@ -49,10 +49,10 @@ public class Nodo {
     }
 
     public void setVisitado(boolean visitado) {
-        this.visitado = visitado;
+        this.ocupado = visitado;
     }
 
-    public void setIdentifier(String identifier) {
+    public void setIdentifier(int identifier) {
         this.identifier = identifier;
     }
 
@@ -81,26 +81,40 @@ public class Nodo {
         this.tasaCreacion = tasaCreacion;
         this.ocupado = ocupado;
     }
+    
+    public Nodo(int identifier, float tasaCreacion, float x, float y) {
+        this.aristas = new ArrayList();
+        this.tasaCreacion = tasaCreacion;
+        this.ocupado = false;
+        this.x = x;
+        this.y = y;
+        this.identifier = identifier;
+    }
+    
+     public void display(PApplet p) {
+        p.fill(255);
+        p.circle(x, this.y, 50);
+    }
 
-    public Nodo(String identifier) {
+    public Nodo(int identifier) {
         this.identifier = identifier;
         this.aristas = new ArrayList();
     }
     
 
-    public int getX() {
+    public float getX() {
         return x;
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         this.x = x;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 

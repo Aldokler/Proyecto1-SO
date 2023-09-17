@@ -20,7 +20,7 @@ public class SimulacionVehicular {
     public static void main(String[] args){
     ArrayList<Nodo> nodosList = new ArrayList();
     for(int i =0;i<9;i++){
-        Nodo n = new Nodo(String.valueOf(i));
+        Nodo n = new Nodo(i);
         nodosList.add(n);
     }
     Arista a12 = new Arista(nodosList.get(0),nodosList.get(1), 2);
@@ -61,7 +61,7 @@ public class SimulacionVehicular {
     nodosList.get(8).addArista(a78);
     
     Car carrito = new Car("tsuru-tuneado", nodosList.get(8), nodosList.get(0), 12, 23);
-    ArrayList<Nodo> rutaa = grafo.Dijsktra(carrito);
+    ArrayList<Nodo> rutaa = Grafo.Dijsktra(carrito);
     
     for(int i =0;i<rutaa.size();i++){
         System.out.println("-"+rutaa.get(i).getIdentifier()+"-");

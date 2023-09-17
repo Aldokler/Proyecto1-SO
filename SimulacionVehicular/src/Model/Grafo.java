@@ -5,12 +5,65 @@
 package Model;
 
 import java.util.ArrayList;
+import processing.core.PApplet;
 
 /**
  *
  * @author jeffr
  */
-public class grafo {
+public class Grafo {
+    static ArrayList<Nodo> nodos;
+    static ArrayList<Arista> aristas;
+    static int contador = 0;
+    
+    
+    public Grafo() {
+        nodos = new ArrayList<Nodo>();
+        aristas = new ArrayList<Arista>();
+     
+    }
+    
+    public void addNodo(float tasaCreacion, float x, float y){
+        Nodo nodo = new Nodo(contador, tasaCreacion, x, y);
+        nodos.add(nodo);
+        contador++;
+        
+        System.out.println(" t " + nodos.size());
+        for (Nodo nod : nodos) {
+            System.out.println(nod.getX() + "  " + nod.getY() + "\n");
+        }
+        
+        
+    }
+    
+    public void addArista(int id1, int id2, float distancia){
+        Nodo nodo1 = getNodo(id1);
+        Nodo nodo2 = getNodo(id2);
+        
+        Arista arista = new Arista(nodo1, nodo2, distancia);
+        aristas.add(arista);
+    }
+    
+    public Nodo getNodo(int id){
+        for (Nodo nodo : nodos) {
+            if(nodo.getIdentifier() == id)
+                return nodo;
+        }
+        return null;
+    }
+    
+    public static void display(PApplet p){
+        for (Nodo n : nodos) {
+            n.display(p);
+        }
+       
+        for (Arista a : aristas) {
+            a.display(p);
+        }
+    }
+    
+    
+    
     public static ArrayList<Nodo> Dijsktra(Car carro){
     ArrayList rutaDisjktra = new ArrayList<Nodo>();
     ArrayList arcosRecorridos = new ArrayList<Arista>();
