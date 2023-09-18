@@ -1,5 +1,5 @@
 # Proyecto1-SO
 
-Comandos para el install.sh:
-dnf install java-17-openjdk.x86_64
-dnf install java-17-openjdk-devel.x86_64
+Ejecutar el archivo install.sh con permisos de sudo para instalar JDK y compilar el proyecto.
+
+Ejecutar el archivo run.sh para correr el programa.
