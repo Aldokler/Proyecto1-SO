@@ -31,7 +31,8 @@ public class Grafo {
         car.setRutas(nodos);
         carros.add(car);
         contCarros++;
-
+        Thread carHilo = new Thread(car);
+        carHilo.start();
     }
 
     public void addNodo(float tasaCreacion, float x, float y) {
@@ -78,7 +79,6 @@ public class Grafo {
         }
 
         for (Car car : carros) {
-            car.update(p);
             car.display(p);
         }
     }

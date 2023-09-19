@@ -6,6 +6,8 @@ package Model;
 
 import java.util.ArrayList;
 import Model.Arista;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -18,7 +20,7 @@ import processing.core.PVector;
  * 
  * @author jeffr
  */
-public class Nodo extends PApplet{
+public class Nodo extends PApplet implements Runnable{
     
     private int identifier;
     private float tasaCreacion;
@@ -144,6 +146,18 @@ public class Nodo extends PApplet{
     }
     public void addArista(Arista a){
         aristas.add(a);
+    }
+
+    @Override
+    public synchronized void run() {
+        while(true){
+            try {
+                //add carro
+                wait((long) (1000/this.tasaCreacion));
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Nodo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
     
 }

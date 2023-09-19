@@ -14,7 +14,7 @@ import processing.core.PImage;
  *
  * @author Aldokler
  */
-public class Car extends PApplet {
+public class Car extends PApplet implements Runnable{
 
     private int Identifier;
     private int Velocidad;
@@ -30,6 +30,7 @@ public class Car extends PApplet {
     private PVector posicion;
     private float speed;
     private boolean done;
+    private PImage img;
 
     public Car(int dentifier, Nodo inicio, Nodo destino, float x, float y) {
         this.Identifier = Identifier;
@@ -62,35 +63,49 @@ public class Car extends PApplet {
     public void setup() {
         this.img = loadImage("C:/Users/Aldokler/Documents/git/Proyecto1-SO/SimulacionVehicular/src/imagenes/car_0.png");
     }
-
-    public void update(PApplet p) {
-        if (rutaActual >= rutas.size()) {
-            done = true;
-        } else {
-            if (posicion.dist(rutas.get(rutaActual).getNodo()) >= 25) {
-                move();
+    
+    @Override
+    public synchronized void run(){
+        while(true){
+            if (rutaActual >= rutas.size()) {
+                done = true;
             } else {
-               if(isNodoFree(rutas.get(rutaActual).getIdentifier())){
-                   /*
-                   try {
-                       wait(2000);
-                   } catch (InterruptedException ex) {
-                       Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
-                   }*/
-                   rutaActual++;
-               }
-               else{
-                   System.out.println("ocupado  " + rutas.get(rutaActual).getIdentifier());
-               }
+                if (posicion.dist(rutas.get(rutaActual).getNodo()) >= 1) {
+                    move();
+                } else {
+                   if(isNodoFree(rutas.get(rutaActual).getIdentifier())){
+                       rutas.get(rutaActual).setOcupado(true);
+                       try {
+                           wait(2000);
+                       } catch (InterruptedException ex) {
+                           Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                       rutas.get(rutaActual).setOcupado(false);
+                       rutaActual++;
+                       notifyAll();
+                   }
+                   else{
+                       try {
+                           wait();
+                       } catch (InterruptedException ex) {
+                           Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
+                       }
+                       System.out.println("ocupado  " + rutas.get(rutaActual).getIdentifier());
+                   }
+                }
+
             }
-
+            try {
+                wait(15);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-
     }
+
 
     public void display(PApplet p) {
         p.fill(150);
-        System.out.println(this.img);
         if (this.img != null){
             image(this.img, 0, 0);
         }
