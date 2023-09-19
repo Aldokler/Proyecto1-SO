@@ -16,20 +16,20 @@ import processing.core.PImage;
  */
 public class Car extends PApplet {
 
-    int Identifier;
-    int Velocidad;
-    Nodo inicio;
-    Nodo actual;
-    Nodo destino;
-    boolean estado;
-    float x, y;
-    PImage img;
+    private int Identifier;
+    private int Velocidad;
+    private Nodo inicio;
+    private Nodo actual;
+    private Nodo destino;
+    private boolean estado;
+    private float x, y;
+    private Object imagen;
 
-    ArrayList<Nodo> rutas;
-    int rutaActual;
-    PVector posicion;
-    float speed;
-    boolean done;
+    private ArrayList<Nodo> rutas;
+    private int rutaActual;
+    private PVector posicion;
+    private float speed;
+    private boolean done;
 
     public Car(int dentifier, Nodo inicio, Nodo destino, float x, float y) {
         this.Identifier = Identifier;
@@ -46,16 +46,14 @@ public class Car extends PApplet {
         done = false;
     }
 
-    public Car(int dentifier, float x, float y) {
+    public Car(int dentifier) {
         this.Identifier = Identifier;
 
-        this.x = x;
-        this.y = y;
         this.Velocidad = 10;
         this.estado = true;
 
         rutaActual = 0;
-        speed = (float) 2.0;
+        speed = (float) 1.0;
         done = false;
         
     }
@@ -69,7 +67,7 @@ public class Car extends PApplet {
         if (rutaActual >= rutas.size()) {
             done = true;
         } else {
-            if (posicion.dist(rutas.get(rutaActual).getNodo()) >= 1) {
+            if (posicion.dist(rutas.get(rutaActual).getNodo()) >= 25) {
                 move();
             } else {
                if(isNodoFree(rutas.get(rutaActual).getIdentifier())){
@@ -92,11 +90,11 @@ public class Car extends PApplet {
 
     public void display(PApplet p) {
         p.fill(150);
-        p.ellipse(x, y, 10, 10);
         System.out.println(this.img);
         if (this.img != null){
             image(this.img, 0, 0);
         }
+        p.circle(x, y, 10);
     }
 
     public void move() {
@@ -187,6 +185,7 @@ public class Car extends PApplet {
     public void setRutas(ArrayList<Nodo> rutas) {
         this.rutas = rutas;
         posicion = rutas.get(0).getNodo();
+        x = posicion.x;
+        y = posicion.y;
     }
-
 }

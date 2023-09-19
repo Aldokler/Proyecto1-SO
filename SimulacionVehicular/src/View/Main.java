@@ -23,7 +23,7 @@ public class Main extends PApplet {
     Grafo grafo = new Grafo();
     Scanner myObj = new Scanner(System.in);
     //Controls c;
-    ArrayList<Nodo> rutas = new ArrayList<>();
+ 
     
     
 
@@ -33,9 +33,7 @@ public class Main extends PApplet {
         stroke(255);
         noFill();
         
-        rutas.add(new Nodo(1, 2, 150, 150));
-        rutas.add(new Nodo(2, 2, 200, 10));
-        rutas.add(new Nodo(3, 2, 300, 300));/*
+    
         
         //c = new Controls();
         /*cp5 = new ControlP5(this);
@@ -70,7 +68,7 @@ public class Main extends PApplet {
             unir();
         }
         if (key == 'c') {
-            grafo.addCarro(mouseX, mouseY, rutas);
+            grafo.addCarro();
         }
 
     }

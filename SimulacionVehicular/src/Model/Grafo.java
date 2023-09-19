@@ -14,7 +14,7 @@ import processing.core.PApplet;
 public class Grafo {
 
     static ArrayList<Nodo> nodos;
-    static ArrayList<Car> carros;
+    public static ArrayList<Car> carros;
     static ArrayList<Arista> aristas;
     static int contGrafos = 0;
     static int contCarros = 0;
@@ -26,10 +26,11 @@ public class Grafo {
 
     }
 
-    public void addCarro(float x, float y, ArrayList<Nodo> rutas) {
-        Car car = new Car(contCarros, x, y);
+    public void addCarro() {
+        Car car = new Car(contCarros);
         car.setRutas(nodos);
         carros.add(car);
+        System.out.println(car.getX() + "-"+car.getY());
         contCarros++;
 
     }
@@ -64,6 +65,10 @@ public class Grafo {
     }
 
     public static void display(PApplet p) {
+        if(nodos.size() == 3)
+            nodos.get(1).setOcupado(true);
+        if(nodos.size() == 4)
+            nodos.get(1).setOcupado(false);
         for (Nodo n : nodos) {
             n.display(p);
             
@@ -74,8 +79,9 @@ public class Grafo {
         }
 
         for (Car car : carros) {
-            car.update(p);
+            //car.update(p);
             car.display(p);
+
         }
     }
 
