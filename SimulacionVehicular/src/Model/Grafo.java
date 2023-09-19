@@ -65,10 +65,6 @@ public class Grafo {
     }
 
     public static void display(PApplet p) {
-        if(nodos.size() == 3)
-            nodos.get(1).setOcupado(true);
-        if(nodos.size() == 4)
-            nodos.get(1).setOcupado(false);
         for (Nodo n : nodos) {
             n.display(p);
             
