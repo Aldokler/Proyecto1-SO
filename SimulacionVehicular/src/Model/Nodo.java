@@ -7,6 +7,7 @@ package Model;
 import java.util.ArrayList;
 import Model.Arista;
 import processing.core.PApplet;
+import processing.core.PVector;
 
 /**
  *  Clase de nodo, 
@@ -24,6 +25,7 @@ public class Nodo extends PApplet{
     private ArrayList aristas;
     private boolean ocupado;
     private float x, y;
+    private PVector nodo;
 
     public boolean isVisitado() {
         return ocupado;
@@ -89,11 +91,26 @@ public class Nodo extends PApplet{
         this.x = x;
         this.y = y;
         this.identifier = identifier;
+        nodo = new PVector(x, y);
+    }
+
+    public PVector getNodo() {
+        return nodo;
     }
     
+    
+    
      public void display(PApplet p) {
-        p.fill(255);
+         if (ocupado){
+             p.fill(255);
+             p.circle(x, this.y, 50);
+             //p.fill(0);
+             //p.circle(x, this.y, 50);
+         }
+         else{ p.fill(0);
         p.circle(x, this.y, 50);
+        }
+        
     }
 
     public Nodo(int identifier) {

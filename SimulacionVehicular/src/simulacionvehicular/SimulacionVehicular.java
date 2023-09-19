@@ -60,7 +60,7 @@ public class SimulacionVehicular {
     nodosList.get(7).addArista(a78);
     nodosList.get(8).addArista(a78);
     
-    Car carrito = new Car("tsuru-tuneado", nodosList.get(8), nodosList.get(0), 12, 23);
+    Car carrito = new Car(1, nodosList.get(8), nodosList.get(0), 12, 23);
     ArrayList<Nodo> rutaa = Grafo.Dijsktra(carrito);
     
     for(int i =0;i<rutaa.size();i++){

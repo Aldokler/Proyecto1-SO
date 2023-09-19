@@ -5,6 +5,7 @@
 package View;
 
 import Model.Arista;
+import Model.Car;
 import Model.Nodo;
 import Model.Grafo;
 import java.util.ArrayList;
@@ -22,19 +23,27 @@ public class Main extends PApplet {
     Grafo grafo = new Grafo();
     Scanner myObj = new Scanner(System.in);
     //Controls c;
+    ArrayList<Nodo> rutas = new ArrayList<>();
+    
+    
 
 
     public void setup() {
         background(0);
         stroke(255);
         noFill();
+        
+        rutas.add(new Nodo(1, 2, 150, 150));
+        rutas.add(new Nodo(2, 2, 200, 10));
+        rutas.add(new Nodo(3, 2, 300, 300));/*
+        
         //c = new Controls();
-        cp5 = new ControlP5(this);
+        /*cp5 = new ControlP5(this);
        // c.a(this);
 
         cp5.addButton("miBoton")
                 .setPosition(100, 100)
-                .setSize(100, 40);
+                .setSize(100, 40);*/
         
     }
 
@@ -60,12 +69,16 @@ public class Main extends PApplet {
         if (key == 'a') {
             unir();
         }
+        if (key == 'c') {
+            grafo.addCarro(mouseX, mouseY, rutas);
+        }
 
     }
 
     public void draw() {
-
+        background(0);
         grafo.display(this);
+        
     }
 
     public void settings() {
