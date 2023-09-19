@@ -70,11 +70,13 @@ public class Car extends PApplet implements Runnable{
             if (rutaActual >= rutas.size()) {
                 done = true;
             } else {
-                if (posicion.dist(rutas.get(rutaActual).getNodo()) >= 1) {
+                PVector destino = rutas.get(rutaActual).getNodo().copy();
+                if (posicion.dist(destino) > 1) {
                     move();
                 } else {
                    if(isNodoFree(rutas.get(rutaActual).getIdentifier())){
                        rutas.get(rutaActual).setOcupado(true);
+                       
                        try {
                            wait(2000);
                        } catch (InterruptedException ex) {
@@ -106,22 +108,19 @@ public class Car extends PApplet implements Runnable{
 
     public void display(PApplet p) {
         p.fill(150);
-        if (this.img != null){
-            image(this.img, 0, 0);
-        }
-        p.circle(x, y, 10);
+        p.circle(posicion.x, posicion.y, 10);
     }
-
     public void move() {
-        PVector direccion = PVector.sub(rutas.get(rutaActual).getNodo(), posicion);
+        PVector destino = rutas.get(rutaActual).getNodo().copy();
+        PVector direccion = PVector.sub(destino, posicion);
         direccion.normalize().mult(speed);
         posicion.add(direccion);
-        x = posicion.x;
-        y = posicion.y;
+        //x = posicion.x;
+       // y = posicion.y;
 
     }
 
-    public boolean isNodoFree(int ID) {
+     public boolean isNodoFree(int ID) {
         for (Nodo n : Grafo.nodos) {
             if (n.getIdentifier() == ID) {
                 if (n.isOcupado()) {
@@ -174,7 +173,7 @@ public class Car extends PApplet implements Runnable{
     }
 
     public Object getImagen() {
-        return img;
+        return imagen;
     }
 
     public void setVelocidad(int Velocidad) {
@@ -199,7 +198,7 @@ public class Car extends PApplet implements Runnable{
 
     public void setRutas(ArrayList<Nodo> rutas) {
         this.rutas = rutas;
-        posicion = rutas.get(0).getNodo();
+        posicion = rutas.get(0).getNodo().copy();
         x = posicion.x;
         y = posicion.y;
     }
