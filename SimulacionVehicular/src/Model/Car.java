@@ -5,9 +5,11 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import processing.core.PApplet;
 import processing.core.PVector;
-
+import processing.core.PImage;
 /**
  *
  * @author Aldokler
@@ -21,7 +23,7 @@ public class Car extends PApplet {
     Nodo destino;
     boolean estado;
     float x, y;
-    Object imagen;
+    PImage img;
 
     ArrayList<Nodo> rutas;
     int rutaActual;
@@ -55,6 +57,12 @@ public class Car extends PApplet {
         rutaActual = 0;
         speed = (float) 2.0;
         done = false;
+        
+    }
+    
+    @Override
+    public void setup() {
+        this.img = loadImage("C:/Users/Aldokler/Documents/git/Proyecto1-SO/SimulacionVehicular/src/imagenes/car_0.png");
     }
 
     public void update(PApplet p) {
@@ -65,6 +73,12 @@ public class Car extends PApplet {
                 move();
             } else {
                if(isNodoFree(rutas.get(rutaActual).getIdentifier())){
+                   /*
+                   try {
+                       wait(2000);
+                   } catch (InterruptedException ex) {
+                       Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
+                   }*/
                    rutaActual++;
                }
                else{
@@ -79,6 +93,10 @@ public class Car extends PApplet {
     public void display(PApplet p) {
         p.fill(150);
         p.ellipse(x, y, 10, 10);
+        System.out.println(this.img);
+        if (this.img != null){
+            image(this.img, 0, 0);
+        }
     }
 
     public void move() {
@@ -143,7 +161,7 @@ public class Car extends PApplet {
     }
 
     public Object getImagen() {
-        return imagen;
+        return img;
     }
 
     public void setVelocidad(int Velocidad) {
