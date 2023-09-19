@@ -170,4 +170,5 @@ public class Car extends PApplet {
         x = posicion.x;
         y = posicion.y;
     }
+
 }
