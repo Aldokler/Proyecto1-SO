@@ -5,6 +5,8 @@
 package Model;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import processing.core.PApplet;
 
 /**
@@ -14,6 +16,7 @@ import processing.core.PApplet;
 public class Grafo {
 
     static ArrayList<Nodo> nodos;
+    static ArrayList<Thread> generadores;
     static ArrayList<Car> carros;
     static ArrayList<Arista> aristas;
     static int contGrafos = 0;
@@ -23,22 +26,39 @@ public class Grafo {
         nodos = new ArrayList<Nodo>();
         aristas = new ArrayList<Arista>();
         carros = new ArrayList<Car>();
+        generadores = new ArrayList();
 
     }
 
     public void addCarro() {
-        Car car = new Car(contCarros);
-        car.setRutas(nodos);
-        carros.add(car);
-        contCarros++;
-        Thread carHilo = new Thread(car);
-        carHilo.start();
+        //if (!nodos.get(0).isOcupado()){
+            Car car = new Car(contCarros);
+            car.setRutas(nodos);
+            carros.add(car);
+            contCarros++;
+            Thread carHilo = new Thread(car);
+            carHilo.start();
+        //}
     }
+    
+    public synchronized void carGenerator(Nodo nodo){
+        while(true){
+            try {
+                wait((long) (1000/nodo.getTasaCreacion()));
+                addCarro();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Nodo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    } 
 
     public void addNodo(float tasaCreacion, float x, float y) {
         Nodo nodo = new Nodo(contGrafos, tasaCreacion, x, y);
         nodos.add(nodo);
         contGrafos++;
+        generadores.add(new Thread(() -> {
+            carGenerator(nodo);
+        }));
 
         System.out.println(" t " + nodos.size());
         for (Nodo nod : nodos) {

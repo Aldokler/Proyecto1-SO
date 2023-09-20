@@ -20,11 +20,12 @@ import processing.core.PVector;
  * 
  * @author jeffr
  */
-public class Nodo extends PApplet implements Runnable{
+public class Nodo extends PApplet{
     
     private int identifier;
     private float tasaCreacion;
     private ArrayList aristas;
+    private ArrayList cola;
     private boolean ocupado;
     private float x, y;
     private PVector nodo;
@@ -78,12 +79,14 @@ public class Nodo extends PApplet implements Runnable{
 
     public Nodo() {
         this.aristas = new ArrayList();
+        this.cola = new ArrayList();
     }
 
     public Nodo(float tasaCreacion, boolean ocupado) {
         this.aristas = new ArrayList();
         this.tasaCreacion = tasaCreacion;
         this.ocupado = ocupado;
+        this.cola = new ArrayList();
     }
     
     public Nodo(int identifier, float tasaCreacion, float x, float y) {
@@ -94,6 +97,7 @@ public class Nodo extends PApplet implements Runnable{
         this.y = y;
         this.identifier = identifier;
         nodo = new PVector(x, y);
+        this.cola = new ArrayList();
     }
 
     public PVector getNodo() {
@@ -118,6 +122,7 @@ public class Nodo extends PApplet implements Runnable{
     public Nodo(int identifier) {
         this.identifier = identifier;
         this.aristas = new ArrayList();
+        this.cola = new ArrayList();
     }
     
 
@@ -148,16 +153,8 @@ public class Nodo extends PApplet implements Runnable{
         aristas.add(a);
     }
 
-    @Override
-    public synchronized void run() {
-        while(true){
-            try {
-                //add carro
-                wait((long) (1000/this.tasaCreacion));
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Nodo.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+    public ArrayList getCola() {
+        return cola;
     }
     
 }
