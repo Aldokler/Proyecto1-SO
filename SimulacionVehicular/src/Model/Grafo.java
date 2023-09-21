@@ -131,6 +131,8 @@ public class Grafo {
         Nodo nodo2 = getNodo(id2);
 
         Arista arista = new Arista(nodo1, nodo2, distancia);
+        nodo1.addArista(arista);
+        nodo2.addArista(arista);
         aristas.add(arista);
         System.out.println("aris" + aristas.size());
     }

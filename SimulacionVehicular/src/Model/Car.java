@@ -62,7 +62,7 @@ public class Car extends PApplet implements Runnable {
     }
 
     public Car(int dentifier) {
-        this.Identifier = Identifier;
+        this.Identifier = dentifier;
 
         this.Velocidad = 10;
         this.estado = true;
@@ -182,6 +182,9 @@ public class Car extends PApplet implements Runnable {
     public void setInicio(Nodo inicio) {
         this.inicio = inicio;
     }
+    public void setDestino(Nodo destino) {
+        this.destino = destino;
+    }
 
     public Nodo getActual() {
         return actual;
@@ -202,6 +205,7 @@ public class Car extends PApplet implements Runnable {
     public Nodo getDestino() {
         return destino;
     }
+    
 
     public boolean isEstado() {
         return estado;
