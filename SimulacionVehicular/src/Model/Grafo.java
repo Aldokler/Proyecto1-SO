@@ -6,6 +6,7 @@ package Model;
 
 import View.Main;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
@@ -62,10 +63,18 @@ public class Grafo {
         }
     }
 
-    public void addCarro() {
+    public void addCarro(Nodo n) {
         //if (!nodos.get(0).isOcupado()){
         Car car = new Car(contCarros);
-        car.setRutas(nodos);
+        Random rand = new Random();
+        Nodo n2 = nodos.get(rand.nextInt(nodos.size()));
+        while(n==n2){
+            n2 = nodos.get(rand.nextInt(nodos.size()));
+        }
+        car.setInicio(n);
+        car.setDestino(n2);
+        
+        car.setRutas(Dijsktra(car));
         carros.add(car);
         contCarros++;
         Thread carHilo = new Thread(car);
@@ -82,7 +91,7 @@ public class Grafo {
                 wait((long) (1000 / nodo.getTasaCreacion()));
                 lock.lock();
                 try {
-                    addCarro();
+                    addCarro(nodo);
                 } finally {
                     lock.unlock();
                 }

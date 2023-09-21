@@ -124,10 +124,11 @@ public class Main extends PApplet {
         if (key == 't') {
             opc = 1;
         }
-        
+        /*
         if (key == 'c') {
             grafo.addCarro();
         }
+*/
 
     }
 
@@ -150,7 +151,7 @@ public class Main extends PApplet {
     }
 
     public void settings() {
-        size(500, 500);
+        size(1200, 800);
         //fullScreen();
 
     }
