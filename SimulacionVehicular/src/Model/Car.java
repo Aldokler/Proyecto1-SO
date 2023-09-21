@@ -99,7 +99,7 @@ public class Car extends PApplet implements Runnable {
                 if (posicion.dist(destino) > 1) {
                     move();
                 } else {
-                    if (isNodoFree(rutas.get(rutaActual).getIdentifier()) && !rutas.get(rutaActual).getCola().contains(this.Identifier)) {
+                    if (isNodoFree(rutas.get(rutaActual).getIdentifier()) && !rutas.get(rutaActual).getCola().contains(this.Identifier) && rutaActual != rutas.size()-1) {
                         lock.lock();
                         try {
                             rutas.get(rutaActual).setOcupado(true);

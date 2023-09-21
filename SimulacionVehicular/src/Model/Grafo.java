@@ -200,17 +200,20 @@ public class Grafo {
             a.display(p);
             System.out.println("arista " + a.getDistancia());
         }
-
-        for (Car car : carros) {
+        
+        for (int i = 0; i < carros.size(); i++){
             lock.lock();
             try {
-                if (car.isDone()){
-                    //carros.remove(car);
+                if (carros.get(i).isDone()){
+                    carros.remove(i);
                 }
-                car.display(p);
             } finally {
                 lock.unlock();
             }
+        }
+
+        for (Car car : carros) {
+            car.display(p);
             
         }
 
