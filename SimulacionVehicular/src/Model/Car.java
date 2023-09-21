@@ -4,6 +4,7 @@
  */
 package Model;
 
+import View.imagen;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.locks.Lock;
@@ -28,7 +29,6 @@ public class Car extends PApplet implements Runnable {
     private Nodo destino;
     private boolean estado;
     private float x, y;
-    private Object imagen;
     private Lock lock;
     
     private int r, g, b;
@@ -59,6 +59,7 @@ public class Car extends PApplet implements Runnable {
         r = rand.nextInt(256);
         g = rand.nextInt(256);
         b = rand.nextInt(256);
+        this.img = imagen.getInstance(null).getImg().get(rand.nextInt(6));
     }
 
     public Car(int dentifier) {
@@ -76,12 +77,8 @@ public class Car extends PApplet implements Runnable {
         r = rand.nextInt(256);
         g = rand.nextInt(256);
         b = rand.nextInt(256);
+        this.img = imagen.getInstance(null).getImg().get(rand.nextInt(6));
 
-    }
-
-    @Override
-    public void setup() {
-        this.img = loadImage("C:/Users/Aldokler/Documents/git/Proyecto1-SO/SimulacionVehicular/src/imagenes/car_0.png");
     }
 
     @Override
@@ -89,7 +86,14 @@ public class Car extends PApplet implements Runnable {
         boolean ciclado = true;
         while (ciclado) {
             if (rutaActual >= rutas.size()) {
-                done = true;
+                lock.lock();
+                try {
+                    this.done = true;
+                    ciclado = false;
+                } finally {
+                    lock.unlock();
+                }
+                break;
             } else {
                 PVector destino = rutas.get(rutaActual).getNodo().copy();
                 if (posicion.dist(destino) > 1) {
@@ -99,6 +103,7 @@ public class Car extends PApplet implements Runnable {
                         lock.lock();
                         try {
                             rutas.get(rutaActual).setOcupado(true);
+                            this.Velocidad = 0;
                         } finally {
                             lock.unlock();
                         }
@@ -111,6 +116,7 @@ public class Car extends PApplet implements Runnable {
 
                         lock.lock();
                         try {
+                            this.Velocidad = 10;
                             rutas.get(rutaActual).setOcupado(false);
                             if (!rutas.get(rutaActual).getCola().isEmpty()) {
                                 rutas.get(rutaActual).getCola().remove(0);
@@ -121,10 +127,21 @@ public class Car extends PApplet implements Runnable {
                         }
 
                         notifyAll();
-                    } else {
+                    } else if (rutaActual == rutas.size()-1){
+                        lock.lock();
+                        try {
+                            this.done = true;
+                            ciclado = false;
+                        } finally {
+                            lock.unlock();
+                        }
+                        break;
+                    }
+                    else {
 
                         lock.lock();
                         try {
+                            this.Velocidad = 0;
                             if (!rutas.get(rutaActual).getCola().contains(this.Identifier)){
                                 rutas.get(rutaActual).getCola().add(this.Identifier);
                             }
@@ -152,8 +169,7 @@ public class Car extends PApplet implements Runnable {
     }
 
     public void display(PApplet p) {
-        p.fill(this.r, this.g, this.b);
-        p.circle(posicion.x, posicion.y, 10);
+        p.image(this.img, posicion.x-9, posicion.y-14);
         
     }
 
@@ -223,10 +239,6 @@ public class Car extends PApplet implements Runnable {
         return y;
     }
 
-    public Object getImagen() {
-        return imagen;
-    }
-
     public void setVelocidad(int Velocidad) {
         this.Velocidad = Velocidad;
     }
@@ -257,6 +269,10 @@ public class Car extends PApplet implements Runnable {
         for (int i = 0; i < 10; i++){
             move();
         }
+    }
+
+    public boolean isDone() {
+        return done;
     }
 
 }

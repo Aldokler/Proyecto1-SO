@@ -88,6 +88,13 @@ public class Main extends PApplet {
         buttons();
         String[] fontList = PFont.list();
         printArray(fontList);
+        
+        ArrayList<PImage> carritos = new ArrayList();
+        for(int i = 0; i < 6; i++){
+            PImage ferrari = loadImage("../imagenes/car_"+i+".png");
+            carritos.add(ferrari);
+        }
+        imagen.getInstance(carritos);
 
     }
 

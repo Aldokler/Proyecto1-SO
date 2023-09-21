@@ -202,7 +202,16 @@ public class Grafo {
         }
 
         for (Car car : carros) {
-            car.display(p);
+            lock.lock();
+            try {
+                if (car.isDone()){
+                    //carros.remove(car);
+                }
+                car.display(p);
+            } finally {
+                lock.unlock();
+            }
+            
         }
 
         if (tiempoInicio > 0) {
