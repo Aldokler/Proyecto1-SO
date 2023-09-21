@@ -22,31 +22,81 @@ public class Main extends PApplet {
     static ControlP5 cp5;
     Grafo grafo = new Grafo();
     Scanner myObj = new Scanner(System.in);
-    //Controls c;
- 
-    
-    
+    static float tiempo = (float) 2.0;
+    public static Textlabel tiempoS;
+    public static Textlabel cantidadC;
+    public static Textlabel velocidadP;
+    public static float numeroInput;
 
+    private int opc = 0;
+
+    public static boolean checkInput() {
+        String numero = (cp5.get(Textfield.class, "input").getText());
+        float n;
+        try {
+            n = Float.parseFloat(numero);
+        } catch (Exception e) {
+            return false;
+        }
+        if (n > 0) {
+            numeroInput = n;
+            return true;
+        }
+        return false;
+    }
+
+    public void buttons() {
+        cp5 = new ControlP5(this);
+
+        cp5.addButton("Stop")
+                .setPosition(0, 0)
+                .setSize(100, 40);
+
+        cp5.addButton("Start")
+                .setPosition(110, 0)
+                .setSize(100, 40);
+
+        tiempoS = cp5.addTextlabel("tiempoS")
+                .setText("Tiempo simulacion: ")
+                .setPosition(0, 50)
+                .setColorValue(0xffffff00)
+                .setFont(createFont("C059-BdIta", 20));
+        cantidadC = cp5.addTextlabel("cantidad")
+                .setText("Cantidad vehiculos: ")
+                .setPosition(0, 80)
+                .setColorValue(0xffffff00)
+                .setFont(createFont("C059-BdIta", 20));
+        velocidadP = cp5.addTextlabel("velocidad")
+                .setText("velocidad promedio: ")
+                .setPosition(0, 110)
+                .setColorValue(0xffffff00)
+                .setFont(createFont("C059-BdIta", 20));
+        
+        cp5.addTextfield("input")
+                .setPosition(220, 10)
+                .setSize(50, 40)
+                .setFont(createFont("C059-BdIta", 20))
+                .setFocus(true)
+                .setAutoClear(false)
+                .setColor(color(255, 0, 0));
+    }
 
     public void setup() {
         background(0);
         stroke(255);
         noFill();
-        
-    
-        
-        //c = new Controls();
-        /*cp5 = new ControlP5(this);
-       // c.a(this);
+        buttons();
+        String[] fontList = PFont.list();
+        printArray(fontList);
 
-        cp5.addButton("miBoton")
-                .setPosition(100, 100)
-                .setSize(100, 40);*/
-        
     }
 
-    public void miBoton() {
-        println("El botón fue presionado.");
+    public void Stop() {
+        grafo.clean();
+    }
+
+    public void Start() {
+        grafo.Iniciar();
     }
 
     public void unir() {
@@ -62,13 +112,26 @@ public class Main extends PApplet {
 
     public void keyReleased() {
         if (key == 'n') {
-            grafo.addNodo((float) 0.5, mouseX, mouseY);
+            grafo.addNodo((float) 1/5, mouseX, mouseY);
         }
-        if (key == 'a') {
-            unir();
+        if (key == 't') {
+            opc = 1;
         }
+        
         if (key == 'c') {
             grafo.addCarro();
+        }
+
+    }
+
+    public void mousePressed() {
+        switch (opc) {
+            case 1:
+                grafo.setTasa(mouseX, mouseY);
+                opc = 0;
+                break;
+            default:
+                grafo.crearUnion(mouseX, mouseY);
         }
 
     }
@@ -76,11 +139,12 @@ public class Main extends PApplet {
     public void draw() {
         background(0);
         grafo.display(this);
-        
+
     }
 
     public void settings() {
         size(500, 500);
+        //fullScreen();
 
     }
 

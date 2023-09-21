@@ -21,7 +21,7 @@ import processing.core.PVector;
  * @author jeffr
  */
 public class Nodo extends PApplet{
-    
+    private long ultimaCreacion;
     private int identifier;
     private float tasaCreacion;
     private ArrayList aristas;
@@ -29,6 +29,17 @@ public class Nodo extends PApplet{
     private boolean ocupado;
     private float x, y;
     private PVector nodo;
+    
+    public void tiempo() {
+        long tiempoMs =  (long) (1000 / tasaCreacion);
+        long tiempoActual = System.currentTimeMillis();
+        
+        if(tiempoActual - ultimaCreacion >= tiempoMs){
+            System.out.println("Nodo crear" + identifier);
+            ultimaCreacion = tiempoActual;
+        }
+
+    }
 
     public boolean isVisitado() {
         return ocupado;
