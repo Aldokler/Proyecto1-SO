@@ -6,6 +6,8 @@ package Model;
 
 import View.Main;
 import java.util.ArrayList;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import processing.core.PApplet;
@@ -19,6 +21,7 @@ public class Grafo {
 
     static ArrayList<Nodo> nodos;
     static ArrayList<Thread> generadores;
+    static ArrayList<Thread> gps;
     static ArrayList<Car> carros;
     static ArrayList<Arista> aristas;
     static int contGrafos = 0;
@@ -26,19 +29,37 @@ public class Grafo {
     private long tiempoInicio;
     private int nodo1 = -1;
     private int nodo2 = -1;
+    private Lock lock;
 
     public Grafo() {
         nodos = new ArrayList<Nodo>();
         aristas = new ArrayList<Arista>();
         carros = new ArrayList<Car>();
         generadores = new ArrayList();
+        gps = new ArrayList();
+        this.lock = new ReentrantLock();
 
     }
 
-    public void clean() {
-        carros.clear();
+    public void clean(){
         tiempoInicio = 0;
+        for(int i = 0; i < generadores.size(); i++){
+            generadores.get(i).interrupt();
+        }
+        generadores.clear();
+        for(int i = 0; i < gps.size(); i++){
+            gps.get(i).interrupt();
+        }
+        gps.clear();
+        carros.clear();
+        for (int i = 0; i < nodos.size(); i++){
+            Nodo nodo = nodos.get(i);
+            nodo.setOcupado(false);
+            generadores.add(new Thread(() -> {
+                carGenerator(nodo);
+            }));
 
+        }
     }
 
     public void addCarro() {
@@ -48,17 +69,26 @@ public class Grafo {
         carros.add(car);
         contCarros++;
         Thread carHilo = new Thread(car);
-        carHilo.start();
+        gps.add(carHilo);
+        gps.get(gps.size()-1).start();
+        //carHilo.start();
         //}
     }
 
     public synchronized void carGenerator(Nodo nodo) {
-        while (true) {
+        boolean ciclado = true;
+        while (ciclado) {
             try {
                 wait((long) (1000 / nodo.getTasaCreacion()));
-                addCarro();
+                lock.lock();
+                try {
+                    addCarro();
+                } finally {
+                    lock.unlock();
+                }
             } catch (InterruptedException ex) {
-                Logger.getLogger(Nodo.class.getName()).log(Level.SEVERE, null, ex);
+                ciclado = false;
+                //Logger.getLogger(Nodo.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -202,6 +232,9 @@ public class Grafo {
     public void Iniciar() {
         tiempoInicio = System.currentTimeMillis();
         tiempoSimulacion();
+        for(int i = 0; i < generadores.size(); i++){
+            generadores.get(i).start();
+        }
     }
 
     public void cantidad() {

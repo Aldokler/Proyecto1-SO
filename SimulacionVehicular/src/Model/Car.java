@@ -86,7 +86,8 @@ public class Car extends PApplet implements Runnable {
 
     @Override
     public synchronized void run() {
-        while (true) {
+        boolean ciclado = true;
+        while (ciclado) {
             if (rutaActual >= rutas.size()) {
                 done = true;
             } else {
@@ -104,7 +105,8 @@ public class Car extends PApplet implements Runnable {
                         try {
                             wait(2000);
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
+                            ciclado = false;
+                            //Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
                         }
 
                         lock.lock();
@@ -133,7 +135,8 @@ public class Car extends PApplet implements Runnable {
                         try {
                             wait(15);
                         } catch (InterruptedException ex) {
-                            Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
+                            ciclado = false;
+                            //Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                 }
@@ -142,7 +145,8 @@ public class Car extends PApplet implements Runnable {
             try {
                 wait(15);
             } catch (InterruptedException ex) {
-                Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
+                ciclado = false;
+                //Logger.getLogger(Car.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

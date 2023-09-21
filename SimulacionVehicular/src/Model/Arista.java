@@ -22,7 +22,7 @@ public class Arista extends PApplet{
     }
     
     public  void display(PApplet p){
-        p.strokeWeight(9); 
+        //p.strokeWeight(9); 
         p.line(inicio.getX(), inicio.getY(), fin.getX(), fin.getY());
     }
 
