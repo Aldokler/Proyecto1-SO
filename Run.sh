@@ -3,11 +3,8 @@
 #Simulacion/nbproject/project.properties
 #https://foojay.io/
 
-cd Proyecto1-SO/Java/
-wget -c https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz -O - | tar -xz
-cd ..
-cd ..
-ant compile
+cd SimulacionVehicular
+ant -Dplatforms.Oracle_OpenJDK_17.0.2_8.home=/lib/jvm/java-17 jar
 ant run
 
 exit
