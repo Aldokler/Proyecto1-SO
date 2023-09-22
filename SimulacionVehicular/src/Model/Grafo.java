@@ -294,6 +294,19 @@ public class Grafo {
         rutaDisjktra.add(actual);
         while (carro.getDestino() != actual) {
             try {
+                if (isDestinationNext(actual, carro.getDestino())) {
+                Arista ab = getAristaPorNodos(actual, carro.getDestino());
+                rutaDisjktra.add(actual);
+                arcosRecorridos.add(ab);
+                if (ab.getFin() == actual) {
+                    actual = ab.getInicio();
+                } else {
+                    actual = ab.getFin();
+                }
+                if (!rutaDisjktra.contains(actual)) {
+                    rutaDisjktra.add(actual);
+                }
+            } else {
                 Arista ar = actual.getShortest(arcosRecorridos);
                 if (ar == null) {
                     if(lugar <0)
@@ -316,11 +329,12 @@ public class Grafo {
                     }
                     lugar++;
                 }
+                }
             } catch (Exception e) {
-            }
+            
                 
             }
-        
+        }
         return rutaDisjktra;
     }
 
