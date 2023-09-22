@@ -5,7 +5,7 @@
 
 cd SimulacionVehicular
 ant -Dplatforms.Oracle_OpenJDK_17.0.2_8.home=/lib/jvm/java-17 jar
-ant run
+ant run -Dplatforms.Oracle_OpenJDK_17.0.2_8.home=/lib/jvm/java-17 jar
 
 exit
 
