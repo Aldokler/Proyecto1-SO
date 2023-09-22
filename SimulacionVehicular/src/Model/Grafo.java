@@ -217,13 +217,20 @@ public class Grafo {
                 if (carros.get(i).isDone()){
                     carros.remove(i);
                 }
+            } catch (Exception e){
             } finally {
                 lock.unlock();
             }
         }
-        for (Car car : carros) {
-            car.display(p);
-            
+        lock.lock();
+        try {
+            for (Car car : carros) {
+                car.display(p);
+                
+            }
+        } catch (Exception e){
+        } finally {
+            lock.unlock();
         }
 
         if (tiempoInicio > 0) {
