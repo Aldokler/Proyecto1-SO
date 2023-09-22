@@ -110,15 +110,16 @@ public class Grafo {
             carGenerator(nodo);
         }));
 
+        /*
         System.out.println(" t " + nodos.size());
         for (Nodo nod : nodos) {
             System.out.println(nod.getX() + "  " + nod.getY() + "\n");
         }
-
+*/
     }
 
     public int NodoSelected(float x, float y) {
-        System.out.println("xy");
+        //System.out.println("xy");
         for (Nodo nodo : nodos) {
             float distancia = dist(x, y, nodo.getX(), nodo.getY());
             if (distancia < 10) {
@@ -129,7 +130,7 @@ public class Grafo {
     }
 
     public void crearUnion(float x, float y) {
-        System.out.println("crear");
+        //System.out.println("crear");
         int id = NodoSelected(x, y);
         if (id >= 0) {
             if (Main.checkInput()) {
@@ -152,7 +153,7 @@ public class Grafo {
     }
 
     public void unir(int ID, float distancia) {
-        System.out.println("nodos1-2");
+        //System.out.println("nodos1-2");
         if (nodo1 == -1) {
             nodo1 = ID;
         } else {
@@ -173,7 +174,7 @@ public class Grafo {
         nodo1.addArista(arista);
         nodo2.addArista(arista);
         aristas.add(arista);
-        System.out.println("aris" + aristas.size());
+        //System.out.println("aris" + aristas.size());
     }
 
     public void setTasa(float x, float y) {
@@ -181,7 +182,7 @@ public class Grafo {
         if (id >= 0) {
             if (Main.checkInput()) {
                 nodos.get(id).setTasaCreacion(Main.numeroInput);
-                System.out.println("tasa input");
+                //System.out.println("tasa input");
             } else {
                 nodos.get(id).setTasaCreacion(15);
             }
@@ -201,13 +202,13 @@ public class Grafo {
     public void display(PApplet p) {
         for (Nodo n : nodos) {
             n.display(p);
-            System.out.println("tasa nodo  " + n.getIdentifier() + "   " + n.getTasaCreacion());
+            //System.out.println("tasa nodo  " + n.getIdentifier() + "   " + n.getTasaCreacion());
 
         }
 
         for (Arista a : aristas) {
             a.display(p);
-            System.out.println("arista " + a.getDistancia());
+            //System.out.println("arista " + a.getDistancia());
         }
         
         for (int i = 0; i < carros.size(); i++){

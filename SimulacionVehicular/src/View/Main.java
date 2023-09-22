@@ -87,7 +87,7 @@ public class Main extends PApplet {
         noFill();
         buttons();
         String[] fontList = PFont.list();
-        printArray(fontList);
+        //printArray(fontList);
         
         ArrayList<PImage> carritos = new ArrayList();
         for(int i = 0; i < 6; i++){

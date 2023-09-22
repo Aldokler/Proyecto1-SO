@@ -266,9 +266,10 @@ public class Car extends PApplet implements Runnable {
         //PVector destino = rutas.get(rutaActual).getNodo().copy();
         x = posicion.x;
         y = posicion.y;
-        for (int i = 0; i < 20; i++){
+        /*
+        for (int i = 0; i < 40; i++){
             move();
-        }
+        }*/
     }
 
     public boolean isDone() {
