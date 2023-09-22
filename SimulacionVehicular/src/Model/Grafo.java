@@ -221,7 +221,6 @@ public class Grafo {
                 lock.unlock();
             }
         }
-
         for (Car car : carros) {
             car.display(p);
             
@@ -303,6 +302,10 @@ public class Grafo {
                 Arista ar = actual.getShortest(arcosRecorridos);
                 if (ar == null) {
                     ar = (Arista) arcosRecorridos.get(lugar);
+                    if(lugar <0)
+                        lugar = 0;
+                    if(lugar >= rutaDisjktra.size())
+                        lugar = rutaDisjktra.size()-1;
                     rutaDisjktra.remove(lugar);
                     lugar--;
                     actual = ar.getInicio();
