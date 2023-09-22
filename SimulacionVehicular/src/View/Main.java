@@ -60,21 +60,21 @@ public class Main extends PApplet {
                 .setText("Tiempo simulacion: ")
                 .setPosition(0, 50)
                 .setColorValue(0xffffff00)
-                .setFont(createFont("C059-BdIta", 20));
+                .setFont(createFont("C059-BdIta", 22));
         cantidadC = cp5.addTextlabel("cantidad")
                 .setText("Cantidad vehiculos: ")
                 .setPosition(0, 80)
                 .setColorValue(0xffffff00)
-                .setFont(createFont("C059-BdIta", 20));
+                .setFont(createFont("C059-BdIta", 22));
         velocidadP = cp5.addTextlabel("velocidad")
                 .setText("velocidad promedio: ")
                 .setPosition(0, 110)
                 .setColorValue(0xffffff00)
-                .setFont(createFont("C059-BdIta", 20));
+                .setFont(createFont("C059-BdIta", 22));
         
         cp5.addTextfield("input")
-                .setPosition(220, 10)
-                .setSize(50, 40)
+                .setPosition(300, 10)
+                .setSize(70, 40)
                 .setFont(createFont("C059-BdIta", 20))
                 .setFocus(true)
                 .setAutoClear(false)
